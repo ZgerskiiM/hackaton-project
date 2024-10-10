@@ -3,31 +3,29 @@
     <Navigation />
     <div class="main-content">
       <div class="header">
-        <div class="header-left">
-          <h1 class="page-title">ОБЗОР</h1>
-        </div>
-        <div class="header-right">
-          <v-icon
-          size="50">mdi-magnify</v-icon>
-          <v-card  class="header-card user-name elevation=0">
-            <v-card-title id="first-title">
-              <div class="header-element"></div>
-              Марк</v-card-title>
-          </v-card>
-          <v-card class="header-card user-points">
-            <div class="header-element">
-              <v-icon>
-                mdi-gold
-              </v-icon>
-            </div>
-            <v-card-title>30б</v-card-title>
-          </v-card>
-        </div>
+  <div class="header-left">
+    <h1 class="page-title">ОБЗОР</h1>
+  </div>
+  <div class="header-right">
+      <v-icon size="36" class="icon-centered">mdi-magnify</v-icon>
+    <v-card class="header-card user-name elevation=0">
+      <v-card-title id="first-title">
+        <div class="header-element"></div>
+        Марк
+      </v-card-title>
+    </v-card>
+    <v-card class="header-card user-points">
+      <div class="header-element">
+        <v-icon size="36" class="icon-centered">mdi-gold</v-icon>
       </div>
+      <v-card-title>30б</v-card-title>
+    </v-card>
+  </div>
+</div>
       <div class="content">
         <v-card flat class="audio-player">
           <v-card-text>
-            <img href="C:\Users\User\Downloads\Telegram Desktop\image255.svg"></img>
+            <img src="D:\image256.png"></img>
             <div class="text-h6 mb-2">{{ trackName }}</div>
             <v-slider
               v-model="currentTime"
@@ -64,42 +62,37 @@
 
         <v-card flat class="todo-list">
   <v-card-title><h2>To-do list</h2></v-card-title>
-  <v-card-subtitle>Ваши планы на день</v-card-subtitle>
   <v-card-text>
     <div class="d-flex align-center">
       <v-date-picker
         v-model="date2"
-        class="mr-4"
+        class="mr-4 mt-0"
         hide-header
-        max-height="300"
+        max-height="500"
         bg-color="transparent"
       ></v-date-picker>
       <v-list class="flex-grow-1">
         <v-list-item v-for="(task, index) in getTasksForCurrentDate()" :key="index">
           <v-list-item-content>
-            <v-list-item-title class="d-flex justify-between align-center">
-              <input
-                type="text"
-                v-model="task.text"
-                class="task-input"
-                @blur="stopEditing(task)"
-                @keypress.enter="stopEditing(task)"
-              />
-              <v-checkbox
-                v-model="task.completed"
-                class="custom-checkbox"
-              ></v-checkbox>
+            <v-list-item-title class="d-flex align-center">
+              <div class="task-input-container"> <!-- Добавим контейнер для выравнивания -->
+                <input
+                  type="text"
+                  v-model="task.text"
+                  class="task-input"
+                  @blur="stopEditing(task)"
+                  @keypress.enter="stopEditing(task)"
+                />
+                <v-checkbox
+                  v-model="task.completed"
+                  class="custom-checkbox"
+                ></v-checkbox>
+              </div>
             </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
-      <!-- Поле для ввода новой задачи -->
-      <input
-        type="text"
-        v-model="newTaskText"
-        placeholder="Новая задача"
-        class="task-input ml-2"
-      />
+      <!-- Кнопка для добавления пустой задачи -->
       <v-btn @click="addTask" class="ml-2" color="primary" style="height: 100%;">+</v-btn>
     </div>
   </v-card-text>
@@ -129,13 +122,13 @@
                 <span>{{ formattedTime }}</span>
               </v-col>
               <v-col>
-                <v-btn @click="editTime" color="primary">Изменить</v-btn>
               </v-col>
             </v-row>
           </v-card-subtitle>
           <v-card-actions>
             <v-btn @click="startConcentration" color="success">Начать</v-btn>
             <v-btn @click="stopConcentration" color="error">Стоп</v-btn>
+            <v-btn @click="editTime" color="primary">Изменить</v-btn>
           </v-card-actions>
         </v-card>
 
@@ -147,6 +140,9 @@
         <v-card flat class="achievement">
           <v-card-title><h2>Лучший читатель</h2></v-card-title>
           <v-card-subtitle>Посмотри как менялось твое настроение за последние 30 дней</v-card-subtitle>
+          <v-card-actions>
+            <v-btn id="achiv-btn">Посмотреть</v-btn> <!-- Добавленная кнопка -->
+          </v-card-actions>
         </v-card>
 
       </div>
@@ -157,6 +153,8 @@
 <script setup>
 import { ref, watch, computed } from 'vue';
 import Navigation from './Navigation.vue';
+import TaskList from '/src/components/TaskList.vue'; // Импортируем компонент задач
+
 
 // Инициализация переменных
 const date2 = ref(new Date(new Date().setHours(0, 0, 0, 0)));
@@ -177,12 +175,14 @@ initializeTasks();
 const newTaskText = ref('');
 
 // Метод добавления задачи
+// Метод добавления пустой задачи
 function addTask() {
   const dateKey = date2.value.toISOString().split('T')[0]; // Формат YYYY-MM-DD
-  if (newTaskText.value.trim() !== '') {
-    tasks.value[dateKey].push({ text: newTaskText.value, completed: false });
-    newTaskText.value = ''; // Очистить поле ввода после добавления
+  if (!tasks.value[dateKey]) {
+    tasks.value[dateKey] = [];
   }
+  // Добавляем новую задачу с пустым текстом
+  tasks.value[dateKey].push({ text: '', completed: false });
 }
 
 // Метод для обновления задач при изменении даты
@@ -281,13 +281,14 @@ function stopConcentration() {
 </script>
 
 <style scoped>
+/* General styles */
 .app-container {
   display: flex;
   height: 100vh;
-  border: 30px solid black;
   position: relative;
-  border-radius: 30px; /* Inner border radius */
-  overflow: hidden; /* Ensures the content respects the border radius */
+  overflow: hidden;
+  padding: 50px;
+  padding-top:10px;
 }
 
 .main-content {
@@ -296,58 +297,54 @@ function stopConcentration() {
   flex-direction: column;
 }
 
+/* Header styles */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 0 20px;
+  padding: 0 15px;
   box-sizing: border-box;
-  margin-bottom: 20px;
-  margin-top: 50px;
+  margin-top: 10px;
+  margin-bottom: 0;
+  margin: 0 0 0 20px;
+
 }
 
-.header-left {
-  margin-left: 100px;
-}
-
+.header-left { margin-left: 70px; }
 .header-right {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-right: 25px;
+  gap: 6px;
+  margin-right: 18px;
+
+
 }
 
-.header-icon {
-  font-size: 24px;
-}
-
+.header-icon { font-size: 20px; }
 .header-card {
-  padding: 5px 10px;
-  border-radius: 15px;
+  padding: 3px 7px;
+  border-radius: 10px;
   background-color: #f0f0f0;
 }
 
-.user-name {
-  font-weight: bold;
-}
-
+.user-name { font-weight: bold; }
 .user-points {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
 }
 
+/* Content styles */
 .content {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  gap: 20px;
-  padding: 20px;
+  gap: 15px;
+  padding: 15px;
   width: 100%;
-  max-width: 1200px;
-  margin: 0;
-  margin-left: 100px;
+  max-width: 950px;
+  margin: 0 0 0 85px;
 }
 
 .page-title {
@@ -357,48 +354,37 @@ function stopConcentration() {
 
 v-card {
   box-sizing: border-box;
-  padding: 20px;
+  padding: 15px;
   background-color: #d8dadc;
 }
 
-.todo-list,
-.articles,
-.achievement {
+.todo-list, .articles, .achievement {
   flex: 0 0 100%;
-  border-radius: 30px;
+  border-radius: 20px;
 }
 
-.achievement {
-  background-color: #d5dae1
-
+.articles, .achievement {
+  height: 140px;
 }
 
-.articles,
-.achievement {
-  height: 200px;
-}
-
-.statistics,
-.shorts {
+.statistics, .shorts {
   flex: 0 0 48%;
-  border-radius: 30px;
-  flex-shrink: 0;
-  height: 200px;
-  background-color: #d5dae1
+  border-radius: 20px;
+  height: 140px;
+  background-color: #d5dae1;
 }
 
 .v-card-title {
-  font-size: 24px;
+  font-size: 14px;
   font-weight: 400;
 }
 
-.v-card-subtitle {
-  font-size: 16px;
-}
+.v-card-subtitle { font-size: 12px; }
 
+/* Todo list styles */
 .todo-list {
-  height: 430px;
-  background-color: #d6edd9
+  height: 350px;
+  background-color: #d6edd9;
 }
 
 .todo-list .v-card-text {
@@ -411,39 +397,58 @@ v-card {
   flex-direction: row;
 }
 
-.todo-list .v-date-picker {
-  flex-shrink: 0;
-}
+.todo-list .v-date-picker { flex-shrink: 0; }
 
 .todo-list .v-list {
   flex-grow: 1;
   overflow-y: auto;
-  max-height: 300px;
+  max-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.task-input-container {
+  display: flex; /* Используем flexbox для выравнивания */
+  align-items: center; /* Центрируем элементы по вертикали */
+  width: 100%; /* Занимаем всю ширину */
+}
+
+.task-input {
+  flex-grow: 1; /* Позволяет инпуту занимать оставшееся пространство */
+  height: 50px; /* Установите высоту инпута */
+  border: 1px solid #ccc; /* Обводка инпута */
+  border-radius: 10px; /* Скругление углов инпута */
+  margin-right: 10px; /* Отступ между инпутом и чекбоксом */
+}
+
+.custom-checkbox {
+  height: 50px; /* Установите высоту чекбокса */
+  display: flex; /* Чтобы чекбокс выравнивался по центру */
+  align-items: center; /* Центрируем чекбокс по вертикали */
 }
 
 .v-list-item {
   background-color: #ffffff;
   margin-top: 10px;
-  border-radius: 15px !important ;/* Добавляем скругление */
-  padding: 10px; /* Опционально: добавляем отступы */
+  border-radius: 10px !important;
+  padding: 7px;
+  width: 80%;
+  height: 50px;
 }
 
-.shorts {
-  margin-left:25px;
-}
+.shorts { margin-left: 18px; background-color: #DCD0EF; }
+.v-list { background-color: transparent; }
 
-.v-list {
-  background-color: transparent;
-}
-
-/* Styles for the audio player */
+/* Audio player styles */
 .audio-player {
-  position: absolute; /* Make the player position absolute */
-  bottom: 20px; /* Adjust this value to match the vertical position of the v-card */
-  right: 20px; /* Adjust this value to match the horizontal position of the v-card */
-  width: 1150px; /* Set a fixed width */
-  border-radius: 30px;
-  padding: 20px;
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  width: 850px;
+  border-radius: 20px;
+  padding: 15px;
   background-color: transparent;
 }
 
@@ -454,93 +459,119 @@ v-card {
 }
 
 .audio-player .text-h6 {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 7px;
 }
-
 .audio-player .v-slider {
   width: 100%;
-  margin: 0 20px;
+  margin: 0 15px;
 }
 
 .audio-player .v-card-actions {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 7px;
 }
 
+/* Image styles */
 img {
-  width: 1150px;
-  height:850px;
-  padding-bottom: 50px;
+  width: 650px;
+  height: 650px;
+  padding-bottom: 40px;
 }
 
-.articles {
-  background-color: #e5def0;
+.statistics {
+  background-color: #DDEEFE;
 }
+
+/* Specific component styles */
+.articles { background-color: #DCD0EF; }
+.achievement { background-color: #F6F0D8; }
 
 h1 {
-  font-size: 42px;
+  font-size: 32px;
   font-weight: 800;
 }
 
-#first-title {
-  width: 200px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.header-element {
-  height: 50px;
-  width: 50px;
-  background-color: #ffffff;
+#achiv-btn {
+  background-color: #E9D16A;
+  color: white;
   border-radius: 10px;
 }
 
+.header-card {
+  padding: 10px; /* Отступ внутри карточки */
+  height: 60px; /* Задайте одинаковую высоту для всех карточек */
+  width: 7vw;
+  display: flex; /* Используем flexbox */
+  justify-content: center; /* Центрируем содержимое по горизонтали */
+  align-items: center; /* Центрируем содержимое по вертикали */
+  border-radius: 10px; /* Скругление углов карточки */
+  background-color: #f0f0f0; /* Цвет фона карточки */
+}
+
+.icon-centered {
+  display: flex; /* Включаем flexbox для иконки */
+  justify-content: center; /* Центрируем иконку */
+  align-items: center; /* Центрируем иконку по вертикали */
+}
+
+#first-title {
+  width: 160px;
+  display: flex;
+  justify-content: space-around;
+  align-items:center;
+}
+
+.header-element {
+  height: 40px;
+  width: 40px;
+  background-color: #ffffff;
+  border-radius: 7px;
+}
+
+/* Scrollbar styles */
 ::-webkit-scrollbar {
-    margin-left: 20px;
-    width: 5px;
+  margin-left: 15px;
+  width: 3px;
 }
 
-::-webkit-scrollbar-thumb {
-  background-color: rgb(0, 0, 0);
-}
+::-webkit-scrollbar-thumb { background-color: rgb(0, 0, 0); }
+::-webkit-scrollbar-track { background-color: rgb(255, 255, 255); }
 
-::-webkit-scrollbar-track {
-    background-color: rgb(255, 255, 255);
-}
+/* Utility classes */
+.line-through { text-decoration: line-through; }
 
-.line-through {
-  text-decoration: line-through;
-}
-
+/* Checkbox styles */
 .custom-checkbox {
-  margin-right: 10px; /* Отступ между чекбоксом и текстом */
+  margin-right: 7px;
 }
 
-/* Стили для чекбокса, чтобы он не закрашивался */
+.custom-checkbox input[type="checkbox"]:checked + .v-input--selection-controls__input,
+.custom-checkbox .v-input--selection-controls__input,
+.custom-checkbox .v-input--selection-controls__input:checked {
+  background-color: transparent;
+}
+
 .custom-checkbox input[type="checkbox"]:checked + .v-input--selection-controls__input {
-  background-color: transparent; /* Убираем закрашивание */
-  border: 2px solid #2196F3; /* Цвет рамки при выборе */
+  border: 2px solid #2196F3;
 }
 
 .custom-checkbox .v-input--selection-controls__input {
-  background-color: transparent; /* Убираем закрашивание при невыборе */
-  border: 2px solid #ccc; /* Цвет рамки при невыборе */
+  border: 2px solid #ccc;
 }
 
-.custom-checkbox .v-input--selection-controls__input:checked {
-  background-color: transparent; /* Убираем закрашивание при выборе */
-}
-
+/* Task input styles */
 .task-input {
-  flex-grow: 1; /* Позволяет полю ввода занимать все доступное пространство */
-  margin-right: 10px; /* Отступ между текстом и чекбоксом */
-  border: 1px solid #ccc; /* Граница поля ввода */
-  border-radius: 4px; /* Скругление углов */
-  padding: 5px; /* Отступ внутри поля */
-  height: 40px; /* Высота поля ввода */
+  flex-grow: 1;
+  margin-right: 7px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 4px;
+  height: 34px;
 }
 
+* {
+}
 </style>
