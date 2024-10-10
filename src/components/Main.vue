@@ -3,36 +3,31 @@
     <Navigation />
     <div class="main-content">
       <div class="header">
-  <div class="header-left">
-    <h1 class="page-title">ОБЗОР</h1>
-  </div>
-  <div class="header-right">
-      <v-icon size="36" class="icon-centered">mdi-magnify</v-icon>
-    <v-card class="header-card user-name elevation=0">
-      <v-card-title id="first-title">
-        <div class="header-element"></div>
-        Марк
-      </v-card-title>
-    </v-card>
-    <v-card class="header-card user-points">
-      <div class="header-element">
-        <v-icon size="36" class="icon-centered">mdi-gold</v-icon>
+        <div class="header-left">
+          <h1 class="page-title">ОБЗОР</h1>
+        </div>
+        <div class="header-right">
+          <v-icon size="36" class="icon-centered">mdi-magnify</v-icon>
+          <v-card class="header-card user-name elevation=0">
+            <v-card-title id="first-title">
+              <div class="header-element"></div>
+              Марк
+            </v-card-title>
+          </v-card>
+          <v-card class="header-card user-points">
+            <div class="header-element">
+              <v-icon size="36" class="icon-centered">mdi-gold</v-icon>
+            </div>
+            <v-card-title>30б</v-card-title>
+          </v-card>
+        </div>
       </div>
-      <v-card-title>30б</v-card-title>
-    </v-card>
-  </div>
-</div>
       <div class="content">
         <v-card flat class="audio-player">
           <v-card-text>
-            <img src="D:\image256.png"></img>
+            <img href="C:\Users\User\Downloads\Telegram Desktop\image255.png"></img>
             <div class="text-h6 mb-2">{{ trackName }}</div>
-            <v-slider
-              v-model="currentTime"
-              :max="duration"
-              hide-details
-              @change="onSliderChange"
-            >
+            <v-slider v-model="currentTime" :max="duration" hide-details @change="onSliderChange">
               <template v-slot:prepend>
                 {{ formatTime(currentTime) }}
               </template>
@@ -61,54 +56,38 @@
         </v-card>
 
         <v-card flat class="todo-list">
-  <v-card-title><h2>To-do list</h2></v-card-title>
-  <v-card-text>
-    <div class="d-flex align-center">
-      <v-date-picker
-        v-model="date2"
-        class="mr-4 mt-0"
-        hide-header
-        max-height="500"
-        bg-color="transparent"
-      ></v-date-picker>
-      <v-list class="flex-grow-1">
-        <v-list-item v-for="(task, index) in getTasksForCurrentDate()" :key="index">
-          <v-list-item-content>
-            <v-list-item-title class="d-flex align-center">
-              <div class="task-input-container"> <!-- Добавим контейнер для выравнивания -->
-                <input
-                  type="text"
-                  v-model="task.text"
-                  class="task-input"
-                  @blur="stopEditing(task)"
-                  @keypress.enter="stopEditing(task)"
-                />
-                <v-checkbox
-                  v-model="task.completed"
-                  class="custom-checkbox"
-                ></v-checkbox>
-              </div>
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-      <!-- Кнопка для добавления пустой задачи -->
-      <v-btn @click="addTask" class="ml-2" color="primary" style="height: 100%;">+</v-btn>
-    </div>
-  </v-card-text>
-</v-card>
+          <v-card-title>
+            <h2>To-do list</h2>
+          </v-card-title>
+          <v-card-text>
+            <div class="d-flex align-center">
+              <v-date-picker v-model="date2" class="mr-4 mt-0" hide-header max-height="500"
+                bg-color="transparent"></v-date-picker>
+              <v-list class="flex-grow-1">
+                <v-list-item v-for="(task, index) in getTasksForCurrentDate()" :key="index">
+                  <v-list-item-content>
+                    <v-list-item-title class="d-flex align-center">
+                      <div class="task-input-container">
+                        <input type="text" v-model="task.text" class="task-input" @blur="stopEditing(task)"
+                          @keypress.enter="stopEditing(task)" />
+                        <v-checkbox v-model="task.completed" class="custom-checkbox"></v-checkbox>
+                      </div>
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+              <v-btn @click="addTask" class="ml-2" color="primary" style="height: 100%;">+</v-btn>
+            </div>
+          </v-card-text>
+        </v-card>
 
         <v-card flat class="articles">
-          <v-card-title><h2>Прочитайте 80 статей</h2></v-card-title>
+          <v-card-title>
+            <h2>Прочитайте 80 статей</h2>
+          </v-card-title>
           <v-card-subtitle>Посмотри как менялось твое настроение за последние 30 дней</v-card-subtitle>
           <v-card-item>
-            <v-progress-linear
-              buffer-value="55"
-              height="12"
-              max="80"
-              min="0"
-              rounded="xm"
-            ></v-progress-linear>
+            <v-progress-linear buffer-value="55" height="12" max="80" min="0" rounded="xm">55/80</v-progress-linear>
           </v-card-item>
         </v-card>
 
@@ -133,15 +112,19 @@
         </v-card>
 
         <v-card flat class="shorts">
-          <v-card-title><h2>Буксы</h2></v-card-title>
+          <v-card-title>
+            <h2>Буксы</h2>
+          </v-card-title>
           <v-card-subtitle>Почитай любимое или узнай новое</v-card-subtitle>
         </v-card>
 
         <v-card flat class="achievement">
-          <v-card-title><h2>Лучший читатель</h2></v-card-title>
+          <v-card-title>
+            <h2>Лучший читатель</h2>
+          </v-card-title>
           <v-card-subtitle>Посмотри как менялось твое настроение за последние 30 дней</v-card-subtitle>
           <v-card-actions>
-            <v-btn id="achiv-btn">Посмотреть</v-btn> <!-- Добавленная кнопка -->
+            <v-btn id="achiv-btn">Посмотреть</v-btn>
           </v-card-actions>
         </v-card>
 
@@ -151,58 +134,51 @@
 </template>
 
 <script setup>
-import { ref, watch, computed } from 'vue';
+import { ref, watch, computed, onMounted } from 'vue';
 import Navigation from './Navigation.vue';
-import TaskList from '/src/components/TaskList.vue'; // Импортируем компонент задач
 
 
-// Инициализация переменных
+
 const date2 = ref(new Date(new Date().setHours(0, 0, 0, 0)));
-const tasks = ref({}); // Объект для хранения задач по датам
+const tasks = ref({});
 
-// Инициализация задач для текущей даты
 function initializeTasks() {
-  const dateKey = date2.value.toISOString().split('T')[0]; // Формат YYYY-MM-DD
-  if (!tasks.value[dateKey]) {
-    tasks.value[dateKey] = []; // Создаем пустой массив задач для этой даты
-  }
-}
-
-// Вызываем инициализацию задач при загрузке компонента
-initializeTasks();
-
-// Переменная для хранения текста новой задачи
-const newTaskText = ref('');
-
-// Метод добавления задачи
-// Метод добавления пустой задачи
-function addTask() {
-  const dateKey = date2.value.toISOString().split('T')[0]; // Формат YYYY-MM-DD
+  const dateKey = date2.value.toISOString().split('T')[0];
   if (!tasks.value[dateKey]) {
     tasks.value[dateKey] = [];
   }
-  // Добавляем новую задачу с пустым текстом
+}
+
+initializeTasks();
+
+
+function addTask() {
+  const dateKey = date2.value.toISOString().split('T')[0];
+  if (!tasks.value[dateKey]) {
+    tasks.value[dateKey] = [];
+  }
+
   tasks.value[dateKey].push({ text: '', completed: false });
 }
 
-// Метод для обновления задач при изменении даты
+
 watch(date2, (newDate) => {
   const dateKey = newDate.toISOString().split('T')[0];
   if (!tasks.value[dateKey]) {
-    tasks.value[dateKey] = []; // Создать пустой массив, если задачи для данной даты отсутствуют
+    tasks.value[dateKey] = [];
   }
 });
 
-// Получение задач для текущей даты
+
 function getTasksForCurrentDate() {
   const dateKey = date2.value.toISOString().split('T')[0];
-  return tasks.value[dateKey] || []; // Возвращаем задачи для текущей даты или пустой массив
+  return tasks.value[dateKey] || [];
 }
 
-// Audio player setup
+
 const trackName = ref('Название трека');
-const currentTime = ref(94); // 1:34 in seconds
-const duration = ref(226); // 3:46 in seconds
+const currentTime = ref(94);
+const duration = ref(226);
 const isPlaying = ref(false);
 
 function formatTime(time) {
@@ -236,33 +212,40 @@ function onRepeat() {
   console.log('Repeat clicked');
 }
 
-const totalMinutes = ref(115); // Общее начальное время в минутах
-const isRunning = ref(false); // Флаг для отслеживания состояния таймера
-const elapsedTime = ref(0); // Время, прошедшее с начала (в секундах)
+const totalMinutes = ref(115);
+const isRunning = ref(false);
+const elapsedTime = ref(0);
 
-// Форматирование времени для отображения
+
 const formattedTime = computed(() => {
-  const totalSeconds = totalMinutes.value * 60 - elapsedTime.value; // Общее время в секундах
+  const totalSeconds = totalMinutes.value * 60 - elapsedTime.value;
   const hours = Math.floor(totalSeconds / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;
   return `${hours} час ${minutes} минут ${seconds} секунд`;
 });
 
-// Метод для изменения времени
+
+const isLoggedIn = ref(false);
+
+onMounted(() => {
+  isLoggedIn.value = localStorage.getItem('isLoggedIn') === 'true';
+});
+
+
 function editTime() {
   const newTime = prompt("Введите новое время в минутах:", totalMinutes.value);
   if (newTime !== null && !isNaN(newTime)) {
     totalMinutes.value = parseInt(newTime);
-    elapsedTime.value = 0; // Сброс времени при изменении
+    elapsedTime.value = 0;
   }
 }
 
-// Метод для начала концентрации
+
 function startConcentration() {
   if (!isRunning.value) {
     isRunning.value = true;
-    elapsedTime.value = 0; // Сброс времени перед началом
+    elapsedTime.value = 0;
     const interval = setInterval(() => {
       if (isRunning.value) {
         elapsedTime.value++;
@@ -273,7 +256,7 @@ function startConcentration() {
   }
 }
 
-// Остановка таймера (если нужно)
+
 function stopConcentration() {
   isRunning.value = false;
 }
@@ -281,14 +264,13 @@ function stopConcentration() {
 </script>
 
 <style scoped>
-/* General styles */
 .app-container {
   display: flex;
   height: 100vh;
   position: relative;
   overflow: hidden;
   padding: 50px;
-  padding-top:10px;
+  padding-top: 10px;
 }
 
 .main-content {
@@ -297,7 +279,6 @@ function stopConcentration() {
   flex-direction: column;
 }
 
-/* Header styles */
 .header {
   display: flex;
   justify-content: space-between;
@@ -311,7 +292,10 @@ function stopConcentration() {
 
 }
 
-.header-left { margin-left: 70px; }
+.header-left {
+  margin-left: 70px;
+}
+
 .header-right {
   display: flex;
   align-items: center;
@@ -321,21 +305,26 @@ function stopConcentration() {
 
 }
 
-.header-icon { font-size: 20px; }
+.header-icon {
+  font-size: 20px;
+}
+
 .header-card {
   padding: 3px 7px;
   border-radius: 10px;
   background-color: #f0f0f0;
 }
 
-.user-name { font-weight: bold; }
+.user-name {
+  font-weight: bold;
+}
+
 .user-points {
   display: flex;
   align-items: center;
   gap: 4px;
 }
 
-/* Content styles */
 .content {
   display: flex;
   flex-wrap: wrap;
@@ -343,7 +332,7 @@ function stopConcentration() {
   gap: 15px;
   padding: 15px;
   width: 100%;
-  max-width: 950px;
+  max-width: 50vw;
   margin: 0 0 0 85px;
 }
 
@@ -358,19 +347,29 @@ v-card {
   background-color: #d8dadc;
 }
 
-.todo-list, .articles, .achievement {
+.todo-list {
+  width: 50vw;
+}
+
+.todo-list,
+.articles,
+.achievement {
   flex: 0 0 100%;
   border-radius: 20px;
 }
 
-.articles, .achievement {
-  height: 140px;
+.articles,
+.achievement {
+  height: 15vh;
 }
 
-.statistics, .shorts {
-  flex: 0 0 48%;
+
+
+.statistics,
+.shorts {
+  flex: 0 0 48.5%;
   border-radius: 20px;
-  height: 140px;
+  height: 20vh;
   background-color: #d5dae1;
 }
 
@@ -379,11 +378,12 @@ v-card {
   font-weight: 400;
 }
 
-.v-card-subtitle { font-size: 12px; }
+.v-card-subtitle {
+  font-size: 12px;
+}
 
-/* Todo list styles */
 .todo-list {
-  height: 350px;
+  height: 37vh;
   background-color: #d6edd9;
 }
 
@@ -397,7 +397,9 @@ v-card {
   flex-direction: row;
 }
 
-.todo-list .v-date-picker { flex-shrink: 0; }
+.todo-list .v-date-picker {
+  flex-shrink: 0;
+}
 
 .todo-list .v-list {
   flex-grow: 1;
@@ -410,23 +412,23 @@ v-card {
 }
 
 .task-input-container {
-  display: flex; /* Используем flexbox для выравнивания */
-  align-items: center; /* Центрируем элементы по вертикали */
-  width: 100%; /* Занимаем всю ширину */
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .task-input {
-  flex-grow: 1; /* Позволяет инпуту занимать оставшееся пространство */
-  height: 50px; /* Установите высоту инпута */
-  border: 1px solid #ccc; /* Обводка инпута */
-  border-radius: 10px; /* Скругление углов инпута */
-  margin-right: 10px; /* Отступ между инпутом и чекбоксом */
+  flex-grow: 1;
+  height: 50px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-right: 10px;
 }
 
 .custom-checkbox {
-  height: 50px; /* Установите высоту чекбокса */
-  display: flex; /* Чтобы чекбокс выравнивался по центру */
-  align-items: center; /* Центрируем чекбокс по вертикали */
+  height: 50px;
+  display: flex;
+  align-items: center;
 }
 
 .v-list-item {
@@ -438,14 +440,19 @@ v-card {
   height: 50px;
 }
 
-.shorts { margin-left: 18px; background-color: #DCD0EF; }
-.v-list { background-color: transparent; }
+.shorts {
+  margin-left: 18px;
+  background-color: #DCD0EF;
+}
 
-/* Audio player styles */
+.v-list {
+  background-color: transparent;
+}
+
 .audio-player {
   position: absolute;
   bottom: 15px;
-  right: 15px;
+  right: 50px;
   width: 850px;
   border-radius: 20px;
   padding: 15px;
@@ -463,6 +470,7 @@ v-card {
   font-weight: bold;
   margin-bottom: 7px;
 }
+
 .audio-player .v-slider {
   width: 100%;
   margin: 0 15px;
@@ -474,10 +482,9 @@ v-card {
   gap: 7px;
 }
 
-/* Image styles */
 img {
-  width: 650px;
-  height: 650px;
+  width: 30vw;
+  height: 70vh;
   padding-bottom: 40px;
 }
 
@@ -485,9 +492,13 @@ img {
   background-color: #DDEEFE;
 }
 
-/* Specific component styles */
-.articles { background-color: #DCD0EF; }
-.achievement { background-color: #F6F0D8; }
+.articles {
+  background-color: #DCD0EF;
+}
+
+.achievement {
+  background-color: #F6F0D8;
+}
 
 h1 {
   font-size: 32px;
@@ -501,27 +512,27 @@ h1 {
 }
 
 .header-card {
-  padding: 10px; /* Отступ внутри карточки */
-  height: 60px; /* Задайте одинаковую высоту для всех карточек */
+  padding: 10px;
+  height: 60px;
   width: 7vw;
-  display: flex; /* Используем flexbox */
-  justify-content: center; /* Центрируем содержимое по горизонтали */
-  align-items: center; /* Центрируем содержимое по вертикали */
-  border-radius: 10px; /* Скругление углов карточки */
-  background-color: #f0f0f0; /* Цвет фона карточки */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background-color: #f0f0f0;
 }
 
 .icon-centered {
-  display: flex; /* Включаем flexbox для иконки */
-  justify-content: center; /* Центрируем иконку */
-  align-items: center; /* Центрируем иконку по вертикали */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #first-title {
   width: 160px;
   display: flex;
   justify-content: space-around;
-  align-items:center;
+  align-items: center;
 }
 
 .header-element {
@@ -531,30 +542,34 @@ h1 {
   border-radius: 7px;
 }
 
-/* Scrollbar styles */
 ::-webkit-scrollbar {
   margin-left: 15px;
   width: 3px;
 }
 
-::-webkit-scrollbar-thumb { background-color: rgb(0, 0, 0); }
-::-webkit-scrollbar-track { background-color: rgb(255, 255, 255); }
+::-webkit-scrollbar-thumb {
+  background-color: rgb(0, 0, 0);
+}
 
-/* Utility classes */
-.line-through { text-decoration: line-through; }
+::-webkit-scrollbar-track {
+  background-color: rgb(255, 255, 255);
+}
 
-/* Checkbox styles */
+.line-through {
+  text-decoration: line-through;
+}
+
 .custom-checkbox {
   margin-right: 7px;
 }
 
-.custom-checkbox input[type="checkbox"]:checked + .v-input--selection-controls__input,
+.custom-checkbox input[type="checkbox"]:checked+.v-input--selection-controls__input,
 .custom-checkbox .v-input--selection-controls__input,
 .custom-checkbox .v-input--selection-controls__input:checked {
   background-color: transparent;
 }
 
-.custom-checkbox input[type="checkbox"]:checked + .v-input--selection-controls__input {
+.custom-checkbox input[type="checkbox"]:checked+.v-input--selection-controls__input {
   border: 2px solid #2196F3;
 }
 
@@ -562,7 +577,6 @@ h1 {
   border: 2px solid #ccc;
 }
 
-/* Task input styles */
 .task-input {
   flex-grow: 1;
   margin-right: 7px;
@@ -570,8 +584,5 @@ h1 {
   border-radius: 10px;
   padding: 4px;
   height: 34px;
-}
-
-* {
 }
 </style>

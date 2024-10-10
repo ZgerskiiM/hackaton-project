@@ -3,39 +3,39 @@ import { ref } from 'vue';
 import Navigation from './Navigation.vue';
 
 const trackName = ref('Название трека');
-const currentTime = ref(94); // 1:34 in seconds
-const duration = ref(226); // 3:46 in seconds
+const currentTime = ref(94);
+const duration = ref(226);
 const isPlaying = ref(false);
 
 function formatTime(time) {
-  const minutes = Math.floor(time / 60);
-  const seconds = Math.floor(time % 60);
-  return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
 }
 
 function onSliderChange(value) {
-  console.log('Slider changed:', value);
+    console.log('Slider changed:', value);
 }
 
 function onShuffle() {
-  console.log('Shuffle clicked');
+    console.log('Shuffle clicked');
 }
 
 function onPrevious() {
-  console.log('Previous clicked');
+    console.log('Previous clicked');
 }
 
 function onPlayPause() {
-  isPlaying.value = !isPlaying.value;
-  console.log('Play/Pause clicked');
+    isPlaying.value = !isPlaying.value;
+    console.log('Play/Pause clicked');
 }
 
 function onNext() {
-  console.log('Next clicked');
+    console.log('Next clicked');
 }
 
 function onRepeat() {
-  console.log('Repeat clicked');
+    console.log('Repeat clicked');
 }
 </script>
 
@@ -45,12 +45,7 @@ function onRepeat() {
     <v-card flat class="audio-player">
         <v-card-text>
             <div class="text-h6 mb-2">{{ trackName }}</div>
-            <v-slider
-                v-model="currentTime"
-                :max="duration"
-                hide-details
-                @change="onSliderChange"
-            >
+            <v-slider v-model="currentTime" :max="duration" hide-details @change="onSliderChange">
                 <template v-slot:prepend>
                     {{ formatTime(currentTime) }}
                 </template>
@@ -59,7 +54,7 @@ function onRepeat() {
                 </template>
             </v-slider>
         </v-card-text>
-        <v-card-actions class="justify-start"> <!-- Изменено с justify-center на justify-start -->
+        <v-card-actions class="justify-start">
             <v-btn icon @click="onShuffle">
                 <v-icon>mdi-shuffle-variant</v-icon>
             </v-btn>
@@ -81,10 +76,10 @@ function onRepeat() {
 
 <style scoped>
 .audio-player {
-    position: absolute; /* Позиционирование */
-    bottom: 20px; /* Вертикальное положение */
-    left: 100px; /* Изменено с right на left, чтобы переместить влево */
-    width: 1150px; /* Фиксированная ширина */
+    position: absolute;
+    bottom: 20px;
+    left: 100px;
+    width: 1150px;
     border-radius: 30px;
     padding: 20px;
     background-color: transparent;
@@ -93,7 +88,7 @@ function onRepeat() {
 .audio-player .v-card-text {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Изменено для выравнивания элементов слева */
+    align-items: flex-start;
 }
 
 .audio-player .text-h6 {
@@ -109,7 +104,7 @@ function onRepeat() {
 
 .audio-player .v-card-actions {
     display: flex;
-    justify-content: flex-start; /* Изменено для выравнивания кнопок слева */
+    justify-content: flex-start;
     gap: 10px;
 }
 </style>
